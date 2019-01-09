@@ -1,0 +1,125 @@
+\documentclass[12pt, fullpage,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage{graphicx}
+
+\newcommand{\semester}{Spring 2019}
+\newcommand{\assignmentId}{0}
+\newcommand{\releaseDate}{7 January, 2019}
+\newcommand{\dueDate}{11:59pm, 16 January, 2019}
+
+\newcommand{\bx}{{\bf x}}
+\newcommand{\bw}{{\bf w}}
+
+\title{CS 5350/6350: Machine Learining \semester}
+\author{Homework \assignmentId}
+\date{Handed out: \releaseDate\\
+  Due: \dueDate}
+
+\begin{document}
+\maketitle
+
+\input{emacscomm}
+\input{general-instructions}
+
+
+\section*{Basic Knowledge Review}
+\label{sec:q1}
+
+%problem 1, decide wether dependency & indendency
+%2, prove p(A + B) <= P(A) + P(B)
+%3, prove P(\sum_i A_i) \le \sum_i p(A_i)
+%4. given two a joint Gaussian, calculate the conditional Guassian distribution
+%5. prove E(X) = E(E(X|Y))
+%4, prove V(E(X)) = E(V(X))
+%5. prove V(Y) = EV(Y|X) + VE(Y|X)
+
+%independency, conditional distribution, expectation, variance, basic properties
+%gradient calcualtion, logistic function, second derivatives
+%
+\begin{enumerate}
+\item~[5 points] We use sets to represent events. For example, toss a fair coin $10$ times, and the event can be represented by the set of ``Heads" or ``Tails" after each tossing. Let a specific event $A$ be ``at least one head". Calculate the probability that event $A$ happens, i.e., $p(A)$.
+\item~[10 points] Given two events $A$ and $B$, prove that 
+\[
+p(A \cup B) \le p(A) + p(B).
+\]
+When does the equality hold?
+\item~[10 points] Let $\{A_1, \ldots, A_n\}$ be a collection of events. Show that
+\[
+p(\cup_{i=1}^n A_i) \le \sum_{i=1}^n p(A_i).
+\]
+When does the equality hold? (Hint: induction)
+%\item~[5 points] Given three events $A$, $B$ and $C$, show that
+%\[
+%p(A\cap B\cap C) = p(A|B\cap C)p(B|C)p(C)
+%\]
+\item~[20 points]  We use $\EE(\cdot)$ and $\VV(\cdot)$ to denote a random variable's mean (or expectation) and variance, respectively. Given two discrete random variables $X$ and $Y$, where $X \in \{0, 1\}$ and $Y \in \{0,1\}$. The joint probability $p(X,Y)$ is given in as follows:
+\begin{table}[h]
+        \centering
+        \begin{tabular}{ccc}
+        \hline\hline
+         & $Y=0$ & $Y=1$ \\ \hline
+         $X=0$ & $1/10$ & $2/10$ \\ \hline
+         $X=1$  & $3/10$ & $4/10$ \\ \hline\hline
+        \end{tabular}
+        %\caption{Training data for the alien invasion problem.}\label{tb-alien-train}
+        \end{table}
+	
+        \begin{enumerate}
+            \item~[10 points] Calculate the following distributions and statistics. 
+            \begin{enumerate}
+            \item the the marginal distributions $p(X)$ and $p(Y)$
+            \item the conditional distributions $p(X|Y)$ and $p(Y|X)$
+            \item $\EE(X)$, $\EE(Y)$, $\VV(X)$, $\VV(Y)$
+            \item  $\EE(Y|X=0)$, $\EE(Y|X=1)$,  $\VV(Y|X=0)$, $\VV(Y|X=1)$ 
+            \item  the covariance between $X$ and $Y$
+            \end{enumerate}
+            \item~[5 points] Are $X$ and $Y$ independent? Why?
+            \item~[5 points] When $X$ is not assigned a specific value, are $\EE(Y|X)$ and $\VV(Y|X)$ still constant? Why?
+        \end{enumerate}
+\item~[10 points] Assume a random variable $X$ follows a standard normal distribution, \ie $X \sim \N(X|0, 1)$. Let $Y = e^X$. Calculate the mean and variance of $Y$.
+\begin{enumerate}
+	\item $\EE(Y)$
+	\item $\VV(Y)$
+\end{enumerate}
+
+\item~[20 points]  Given two random variables $X$ and $Y$, show that 
+\begin{enumerate}
+\item $\EE(\EE(Y|X)) = \EE(Y)$
+\item
+$\VV(Y) = \EE(\VV(Y|X)) + \VV(\EE(Y|X))$
+\end{enumerate}
+(Hints: using definition.)
+
+%\item~[20 points]  Let us go back to the coin tossing example. Suppose we toss a coin for $n$ times, \textit{independently}. Each toss we have $\frac{1}{2}$ chance to obtain the head. Let us denote the total number of heads by $c(n)$. Derive the following statistics. You don't need to give the numerical values. You only need to provide the formula.
+%\begin{enumerate}
+%\item $\EE(c(1))$, $\VV(c(1))$
+%\item $\EE(c(10))$, $\VV(c(10))$
+%\item $\EE(c(n))$, $\VV(c(n))$
+%\end{enumerate} 
+%What can you conclude from comparing the expectations and variances with different choices of $n$?  
+
+\item~[15 points] Given a logistic function, $f(\x) = 1/(1+\exp(-\a^\top \x))$ ($\x$ is a vector), derive/calculate the following gradients and Hessian matrices.  
+\begin{enumerate}
+\item $\nabla f(\x)$
+\item $\nabla^2 f(\x)$
+\item $\nabla f(\x)$ when $\a = [1,1,1,1,1]^\top$ and $\x = [0,0,0,0,0]^\top$
+\item $\nabla^2 f(\x)$  when $\a = [1,1,1,1,1]^\top$ and $\x = [0,0,0,0,0]^\top$
+\end{enumerate}
+Note that $0 \le f(\x) \le 1$.
+
+\item~[10 points] Show that $g(x) = -\log(f(\x))$ where $f(\x)$ is a logistic function defined as above, is convex. 
+
+
+\end{enumerate}
+
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
