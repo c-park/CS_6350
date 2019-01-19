@@ -19,6 +19,13 @@
 \author{Homework \assignmentId}
 \date{Handed out: \releaseDate\\
   Due: \dueDate}
+  
+%
+% Various Helper Commands
+%
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
 
 \begin{document}
 \maketitle
@@ -68,16 +75,62 @@
 %
 \begin{enumerate}
 \item~[5 points] We use sets to represent events. For example, toss a fair coin $10$ times, and the event can be represented by the set of ``Heads" or ``Tails" after each tossing. Let a specific event $A$ be ``at least one head". Calculate the probability that event $A$ happens, i.e., $p(A)$.
+\\
+
+\solution
+\[
+        \begin{split}
+            p(A) &= p(\text{At least one head})
+            \\
+            &= 1 - p(\text{All tails})
+            \\
+            &= 1 - \frac{1}{2^{10}}
+            \\
+            &= \boxed{\frac{1023}{1024}}
+        \end{split}
+\]
+
+
+\pagebreak
+
+
 \item~[10 points] Given two events $A$ and $B$, prove that 
 \[
 p(A \cup B) \le p(A) + p(B).
 \]
 When does the equality hold?
+\\
+
+\solution
+
+Starting with the addition rule of probability:
+\[
+p(A \cup B) = p(A) + p(B) - p(A \cap B)
+\]
+
+The last term, $p(A \cap B)$, must be greater than or equal to zero. Substituting this into the above equation gives the following:
+
+\[
+p(A \cup B) \le p(A) + p(B).
+\]
+
+\pagebreak
+
 \item~[10 points] Let $\{A_1, \ldots, A_n\}$ be a collection of events. Show that
 \[
 p(\cup_{i=1}^n A_i) \le \sum_{i=1}^n p(A_i).
 \]
 When does the equality hold? (Hint: induction)
+\\
+
+\solution
+\[
+            p(\cup_{i=1}^n A_i) &= \sum_{i=1}^n p(A_i) - \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} p(A_i \cap A_j)  + \sum_{i=1}^{n-2} \sum_{j=i+1}^{n-1} \sum_{k=j+1}^{n} p(A_i \cap A_j \cap A_k) - \dotsc 
+\]
+
+In the case where the events $A_i$ are
+
+
 %\item~[5 points] Given three events $A$, $B$ and $C$, show that
 %\[
 %p(A\cap B\cap C) = p(A|B\cap C)p(B|C)p(C)
