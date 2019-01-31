@@ -17,6 +17,7 @@
 
 \title{CS 5350/6350: Machine Learining \semester}
 \author{Homework \assignmentId}
+
 \date{Handed out: \releaseDate\\
   Due: \dueDate}
   
@@ -30,32 +31,12 @@
 \begin{document}
 \maketitle
 
+Author: Cade Parkison
+
+uID: u0939163
+
 \input{emacscomm}
-\footnotesize
-	\begin{itemize}
-		\item You are welcome to talk to other members of the class about
-		the homework. I am more concerned that you understand the
-		underlying concepts. However, you should write down your own
-		solution. Please keep the class collaboration policy in mind.
-		
-		\item Feel free discuss the homework with the instructor or the TAs.
-		
-		\item Your written solutions should be brief and clear. You need to
-		show your work, not just the final answer, but you do \emph{not}
-		need to write it in gory detail. Your assignment should be {\bf no
-			more than 10 pages}. Every extra page will cost a point.
-		
-		\item Handwritten solutions will not be accepted.
-		
-		\item The homework is due by \textbf{midnight of the due date}. Please submit
-		the homework on Canvas.
-		
-		\item Some questions are marked {\bf For 6350 students}. Students
-		who are registered for CS 6350 should do these questions. Of
-		course, if you are registered for CS 5350, you are welcome to do
-		the question too, but you will not get any credit for it.
-		
-	\end{itemize}
+
 
 
 
@@ -93,7 +74,7 @@
 
 \pagebreak
 
-
+\label{sec:q2}
 \item~[10 points] Given two events $A$ and $B$, prove that 
 \[
 p(A \cup B) \le p(A) + p(B).
@@ -102,7 +83,7 @@ When does the equality hold?
 \\
 
 \solution
-
+\\
 Starting with the addition rule of probability:
 \[
 p(A \cup B) = p(A) + p(B) - p(A \cap B)
@@ -116,6 +97,7 @@ p(A \cup B) \le p(A) + p(B).
 
 \pagebreak
 
+\label{sec:q3}
 \item~[10 points] Let $\{A_1, \ldots, A_n\}$ be a collection of events. Show that
 \[
 p(\cup_{i=1}^n A_i) \le \sum_{i=1}^n p(A_i).
@@ -124,17 +106,41 @@ When does the equality hold? (Hint: induction)
 \\
 
 \solution
+\\
+Since $p(A \cup B) = p(A) + p(B) - p(A \cap B)$ we have
+
+	\[
+		p(\cup_{i=1}^{n+1} A_i) = p(\cup_{i=1}^{n} A_i) + p(A_{n+1}) - p(\cup_{i=1}^{n} A_i \cap A_{n+1})
+	\]
+	\\
+But since 
+	\[
+		p(\cup_{i=1}^{n} A_i \cap A_{n+1}) \ge 0
+	\]
+	\\
+We have
+	\[
+		p(\cup_{i=1}^{n+1} A_i) \le p(\cup_{i=1}^{n} A_i) + p(A_{n+1})
+	\]
+	\\
+Therefore
 \[
-            p(\cup_{i=1}^n A_i) &= \sum_{i=1}^n p(A_i) - \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} p(A_i \cap A_j)  + \sum_{i=1}^{n-2} \sum_{j=i+1}^{n-1} \sum_{k=j+1}^{n} p(A_i \cap A_j \cap A_k) - \dotsc 
+p(\cup_{i=1}^{n+1} A_i) \le \sum_{i=1}^{n+1} p(A_i).
 \]
 
-In the case where the events $A_i$ are
+
+
+In the case where the events $A_i$ are disjoint, the less than equals sign above becomes an equals sign. 
+
+\pagebreak
 
 
 %\item~[5 points] Given three events $A$, $B$ and $C$, show that
 %\[
 %p(A\cap B\cap C) = p(A|B\cap C)p(B|C)p(C)
 %\]
+
+\label{sec:q4}
 \item~[20 points]  We use $\EE(\cdot)$ and $\VV(\cdot)$ to denote a random variable's mean (or expectation) and variance, respectively. Given two discrete random variables $X$ and $Y$, where $X \in \{0, 1\}$ and $Y \in \{0,1\}$. The joint probability $p(X,Y)$ is given in as follows:
 \begin{table}[h]
         \centering
@@ -159,19 +165,411 @@ In the case where the events $A_i$ are
             \item~[5 points] Are $X$ and $Y$ independent? Why?
             \item~[5 points] When $X$ is not assigned a specific value, are $\EE(Y|X)$ and $\VV(Y|X)$ still constant? Why?
         \end{enumerate}
+        
+\solution
+		\begin{enumerate}
+            \item~
+            \begin{enumerate}
+            \item the the marginal distributions $p(X)$ and $p(Y)$
+            \[
+            	\begin{split}
+            		p(X_{x=0}) &= p(X_{x=0}, Y_{y=0}) + p(X_{x=0}, Y_{y=1}) 
+            		\\
+            		&= \frac{1}{10} + \frac{2}{10} = \frac{3}{10}
+            		\\
+            	\end{split}
+			\]
+			\[
+            	\begin{split}
+            		p(X_{x=1}) &= p(X_{x=1}, Y_{y=0}) + p(X_{x=1}, Y_{y=1}) 
+            		\\
+            		&= \frac{3}{10} + \frac{4}{10} = \frac{7}{10}
+            		\\
+            	\end{split}
+			\]
+            \[
+            	\begin{split}
+            		p(Y_{y=0}) &= p(X_{x=0}, Y_{y=0}) + p(X_{x=1}, Y_{y=0}) 
+            		\\
+            		&= \frac{1}{10} + \frac{3}{10} = \frac{2}{5}
+            		\\
+            	\end{split}
+			\]
+            \[
+            	\begin{split}
+            		p(Y_{y=1}) &= p(X_{x=0}, Y_{y=1}) + p(X_{x=1}, Y_{y=1}) 
+            		\\
+            		&= \frac{2}{10} + \frac{4}{10} = \frac{3}{5}
+            		\\
+            	\end{split}
+			\]
+			\\
+			
+            \item the conditional distributions $p(X|Y)$ and $p(Y|X)$
+            \\
+            
+            Using the following formula, we can easily calculate the conditional distributions
+            
+            \[
+            	p(X|Y) = \frac{p(X,Y)}{p(Y)} 
+            \]
+            \\
+            
+            $p(X|Y)$:
+            \[
+            	\begin{split}
+            		p(X_{x=0}|Y_{y=0}) &= \frac{p(X_{x=0},Y_{y=0})}{\sum_i p(X=i, Y=0)} 
+            			\\
+            			&= \frac{1/10}{1/10 + 3/10}
+            			\\
+            			&= \boxed{\frac{1}{4}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		p(X_{x=1}|Y_{y=0}) &= \frac{p(X_{x=1},Y_{y=0})}{\sum_i p(X=i, Y=0)} 
+            			\\
+            			&= \frac{3/10}{1/10 + 3/10}
+            			\\
+            			&= \boxed{\frac{3}{4}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		p(X_{x=0}|Y_{y=1}) &= \frac{p(X_{x=0},Y_{y=1})}{\sum_i p(X=i, Y=1)} 
+            			\\
+            			&= \frac{2/10}{2/10 + 4/10}
+            			\\
+            			&= \boxed{\frac{1}{3}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		p(X_{x=1}|Y_{y=1}) &= \frac{p(X_{x=1},Y_{y=1})}{\sum_i p(X=i, Y=1)} 
+            			\\
+            			&= \frac{4/10}{2/10 + 4/10}
+            			\\
+            			&= \boxed{\frac{2}{3}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            
+             $p(Y|X)$:
+            \[
+            	\begin{split}
+            		p(Y_{y=0}|X_{x=0}) &= \frac{p(X_{x=0},Y_{y=0})}{\sum_i p(X=0, Y=i)} 
+            			\\
+            			&= \frac{1/10}{1/10 + 2/10}
+            			\\
+            			&= \boxed{\frac{1}{3}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		p(Y_{y=1}|X_{x=0}) &= \frac{p(X_{x=0},Y_{y=1})}{\sum_i p(X=0, Y=i)} 
+            			\\
+            			&= \frac{2/10}{1/10 + 2/10}
+            			\\
+            			&= \boxed{\frac{2}{3}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		p(Y_{y=0}|X_{x=1}) &= \frac{p(X_{x=1},Y_{y=0})}{\sum_i p(X=1, Y=i)} 
+            			\\
+            			&= \frac{3/10}{3/10 + 4/10}
+            			\\
+            			&= \boxed{\frac{3}{7}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		p(Y_{y=1}|X_{x=1}) &= \frac{p(X_{x=1},Y_{y=1})}{\sum_i p(X=1, Y=i)} 
+            			\\
+            			&= \frac{4/10}{3/10 + 4/10}
+            			\\
+            			&= \boxed{\frac{4}{7}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            
+            \item $\EE(X)$, $\EE(Y)$, $\VV(X)$, $\VV(Y)$
+            \\
+            \[
+            	\begin{split}
+            		\EE(X) &= \sum_x x p(x)
+            			\\
+            			&= (0) * p(x=0) + (1) * p(x=1)
+            			\\
+            			&= 0 * \frac{3}{10} + 1 * \frac{7}{10}
+            			\\
+            			&= \boxed{\frac{7}{10}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		\EE(Y) &= \sum_y y p(y)
+            			\\
+            			&= (0) * p(y=0) + (1) * p(y=1)
+            			\\
+            			&= 0  +  \frac{3}{5}
+            			\\
+            			&= \boxed{\frac{3}{5}}
+            			\\
+            	\end{split}
+            \]
+            \\
+            \[
+            	\begin{split}
+            		\VV(X) &= \EE(X^2) - \EE(X)^2
+            			\\
+            			&= \sum_x x^2 p(x) - \EE(X)^2
+            			\\
+            			&= \frac{7}{10} - (\frac{7}{10})^2
+            			\\
+            			&= \boxed{\frac{21}{100}} = 0.21
+            			\\
+            	\end{split}
+            \]
+            \\
+          
+            \[
+            	\begin{split}
+            		\VV(Y) &= \EE(Y^2) - \EE(Y)^2
+            			\\
+            			&= \sum_y y^2 p(y) - \EE(Y)^2
+            			\\
+            			&= \frac{3}{5} - (\frac{3}{5})^2
+            			\\
+            			&= \boxed{\frac{6}{25}} = 0.24
+            			\\
+            	\end{split}
+            \]
+            \\
+            \item  $\EE(Y|X=0)$, $\EE(Y|X=1)$,  $\VV(Y|X=0)$, $\VV(Y|X=1)$ 
+            
+            	\[
+            		\begin{split}
+            			\EE(Y|X=0) &= \sum_y y P(y|x=0)
+            				\\
+            				&= (0) * P(y=0 | x=0) + (1)*P(y=1|x=0)
+            				\\
+            				&= \boxed{\frac{2}{3}}
+            				\\
+            		\end{split}
+            	\]
+            	\\
+            	
+            	\[
+            		\begin{split}
+            			\EE(Y|X=1) &= \sum_y y P(y|x=1)
+            				\\
+            				&= (0) * P(y=0 | x=1) + (1)*P(y=1|x=1)
+            				\\
+            				&= \boxed{\frac{4}{7}}
+            				\\
+            		\end{split}
+            	\]
+            	\\
+            	
+            	\[
+            		\begin{split}
+            			\VV(Y|X=0) &= \sum_y y^2 P(y|X=0) - \EE(Y|X=0)^2
+            				\\
+            				&= (0)^2 * P(Y=0|X=0) + (1)^2 * P(Y=1|X=0) - \EE(Y|X=0)^2
+            				\\
+            				&= \frac{2}{3} - (\frac{2}{3})^2
+            				\\
+            				&= \boxed{\frac{2}{9}}
+            				\\
+            		\end{split}
+           	 	\]
+            	\\
+            	\[
+            		\begin{split}
+            			\VV(Y|X=1) &= \sum_y y^2 P(y|X=1) - \EE(Y|X=1)^2
+            				\\
+            				&= (0)^2 * P(Y=0|X=1) + (1)^2 * P(Y=1|X=1) - \EE(Y|X=1)^2
+            				\\
+            				&= \frac{4}{7} - (\frac{4}{7})^2
+            				\\
+            				&= \boxed{\frac{12}{49}} \approx 0.2449
+            				\\
+            		\end{split}
+           	 	\]
+            	\\
+            
+            
+            \item  the covariance between $X$ and $Y$
+            
+            \[
+            	\begin{split}
+            		Cov(X,Y) &= \EE(XY) - \EE(X) \EE(Y)
+            			\\
+           				&= \sum_x \sum_y xy P(x,y) - \EE(X) \EE(Y)
+           				\\
+           				&= \Big((0 \times 0) \times \frac{1}{10} + (0 \times 1) \times \frac{2}{10} + (1 \times 0) \times \frac{3}{10} + (1 \times 1) \times \frac{4}{10}\Big) - \frac{7}{10} \times \frac{3}{5}
+           				\\
+           				&= \frac{4}{10} - \frac{21}{50}
+           				\\
+           				&= \boxed{-\frac{1}{50}}
+           		\end{split}
+            \]
+            
+            
+            \end{enumerate}
+            \item~[5 points] Are $X$ and $Y$ independent? Why?
+         
+            
+            
+            X and Y are not independent because $Cov(X,Y) \neq 0$. If they were independent, then the following must also hold:
+            
+            \[
+            	\EE(Y|X=x)= \EE(Y)
+            \]
+            But, for example, when we plug in $x=1$ this condition is not met:
+            \[
+            	\begin{split}
+            	\EE(Y|X=1) &= \EE(Y)
+            		\\
+            		\frac{4}{7} &\neq \frac{3}{5} 
+            		\\
+            	\end{split}
+            \]
+            
+            \item~[5 points] When $X$ is not assigned a specific value, are $\EE(Y|X)$ and $\VV(Y|X)$ still constant? Why?
+            
+       		Yes, these both remain constant. If X is not assigned a specific value, it does not change the possible values that X can obtain. This means that the Expectation and Variance would still be the same. 
+        \end{enumerate}
+        
+        \pagebreak
+
+\label{sec:q5}   
 \item~[10 points] Assume a random variable $X$ follows a standard normal distribution, \ie $X \sim \N(X|0, 1)$. Let $Y = e^X$. Calculate the mean and variance of $Y$.
+
+\solution
+
 \begin{enumerate}
 	\item $\EE(Y)$
+	
+	The probability density function of a standard normal distribution is:
+	
+	$$p(x) = \frac{1}{\sqrt{2 \pi}} e^{-x^2 / 2}$$
+	
+	Plugging this into the definition of Expected value gives:
+	
+	\[
+		\begin{split}
+			\EE(Y) &= \int_{-\infty}^{\infty} e^x \frac{1}{\sqrt{2 \pi}} e^{-x^2 / 2} dx
+			\\
+			&= \int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^2 / 2 - x} dx
+			\\
+			&= \boxed{0}
+		\end{split}	
+	\]
+	
 	\item $\VV(Y)$
+	
+	\[
+		\begin{split}
+			\VV(Y) &= \EE(Y^2) - \EE(Y)^2
+				\\
+				&= 	\int_{-\infty}^{\infty} e^{2x} \frac{1}{\sqrt{2 \pi}} e^{-x^2 / 2} dx - (0)^2
+				\\
+				&= \int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi}} e^{-x^2 / 2 - 2x} dx - (0)^2
+				\\
+				&= \boxed{0}
+		\end{split}	
+	\]
+	
+	
 \end{enumerate}
 
+\label{sec:q6}
 \item~[20 points]  Given two random variables $X$ and $Y$, show that 
 \begin{enumerate}
 \item $\EE(\EE(Y|X)) = \EE(Y)$
+
+\solution
+
+\[
+	\begin{split}
+		\EE(\EE(Y|X)) &= \int_{-\infty}^{\infty} \EE(Y|X=x) P(x)dx
+			\\
+			&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} y P(y|x) dy P(x) dx
+			\\
+			&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} y P(y|x) P(x) dy dx
+			\\
+			&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} y P(y,x) dy dx
+			\\
+			&= \int_{-\infty}^{\infty} y \int_{-\infty}^{\infty}  P(y,x) dy dx
+			\\
+			&= \int_{-\infty}^{\infty} y P(y) dy
+			\\
+			&= \boxed{\EE(Y)}
+	\end{split}
+\]
 \item
 $\VV(Y) = \EE(\VV(Y|X)) + \VV(\EE(Y|X))$
+
+\solution
+
+Using the definition of expected value:
+
+\[
+	\begin{split}
+		\EE(\VV(Y|X)) = \EE(\EE(Y^2|X)) - \EE((\EE(Y|X))^2)
+	\end{split}
+\]
+
+But, from part (a), we can say the following:
+
+$$ \EE(\EE(Y^2|X)) = \EE(Y^2) $$
+
+Therefore:
+\[
+	\begin{split}
+		\EE(\VV(Y|X)) = \EE(Y^2) - \EE((\EE(Y|X))^2)
+	\end{split}
+\]
+
+Using the other formula for variance, we have: 
+\[
+	\begin{split}
+		\VV(\EE(Y|X)) &= \EE(\EE(Y|X)^2) - (\EE(\EE(Y|X))^2
+			\\
+			&= \EE(\EE(Y|X)^2) - (\EE(Y))^2
+	\end{split}
+\]
+
+Combining the two equations above gives the wanted result:
+\[
+	\begin{split}
+		\EE(\VV(Y|X)) + \VV(\EE(Y|X)) &= \EE(Y^2) - (\EE(Y))^2
+			\\
+			&= \VV(Y)
+	\end{split}
+\]
+
+
 \end{enumerate}
-(Hints: using definition.)
+
 
 %\item~[20 points]  Let us go back to the coin tossing example. Suppose we toss a coin for $n$ times, \textit{independently}. Each toss we have $\frac{1}{2}$ chance to obtain the head. Let us denote the total number of heads by $c(n)$. Derive the following statistics. You don't need to give the numerical values. You only need to provide the formula.
 %\begin{enumerate}
@@ -180,17 +578,114 @@ $\VV(Y) = \EE(\VV(Y|X)) + \VV(\EE(Y|X))$
 %\item $\EE(c(n))$, $\VV(c(n))$
 %\end{enumerate} 
 %What can you conclude from comparing the expectations and variances with different choices of $n$?  
-
+\pagebreak
+\label{sec:q7}
 \item~[15 points] Given a logistic function, $f(\x) = 1/(1+\exp(-\a^\top \x))$ ($\x$ is a vector), derive/calculate the following gradients and Hessian matrices.  
+
+\solution
+
 \begin{enumerate}
 \item $\nabla f(\x)$
+
+	\[
+		\begin{split}
+			\nabla f(\x) &= \frac{\partial}{\partial \x} \Big(\frac{1}{1+ e^{-\a^\top \x}}\Big)
+				\\
+				&= \frac{e^{-\a^\top \x}}{(1 + e^{-\a^\top \x})^2}
+				\\
+				&= \frac{1+ e^{-\a^\top \x} - 1}{(1 + e^{-\a^\top \x})^2}
+				\\
+				&= \frac{1+ e^{-\a^\top \x}}{(1 + e^{-\a^\top \x})^2} - \Big(\frac{1}{1 + e^{-\a^\top \x}}\Big)^2
+				\\
+				&= \frac{1}{(1 + e^{-\a^\top \x})} - \Big(\frac{1}{1 + e^{-\a^\top \x}}\Big)^2
+				\\
+				&= f(\x) - f(\x)^2
+				\\
+				&= \boxed{f(\x)(1-f(\x))}
+		\end{split}
+	\]
+	\\
+
 \item $\nabla^2 f(\x)$
+
+	\[
+		\begin{split}
+			\nabla^2 f(\x) &= \frac{\partial}{\partial \x} \big(f(\x)(1-f(\x))\big)
+				\\
+				&= \nabla f(\x) (1 - f(\x)) - f(\x) \nabla (f\x)
+				\\
+				&= \nabla f(\x) ( 1 - 2 f(\x))
+				\\
+				&= f(\x)(1-f(\x)(1-2f(\x))
+				\\
+				&= \boxed{f(\x)(2f(\x)^2 - 3 f(\x) + 1)}
+		\end{split}
+	\]
+	
+	
 \item $\nabla f(\x)$ when $\a = [1,1,1,1,1]^\top$ and $\x = [0,0,0,0,0]^\top$
+
+Say $\z = -\a^\top\x$, plugging in $\a$ and $\x$ gives:
+
+\[
+	\begin{split}
+		\z &= -\a^\top\x
+			\\
+			&= 0
+			\\
+	\end{split}
+\]
+
+Plugging this in to part (a) gives the following:
+
+\[
+	\begin{split}
+			\nabla f(\x) &= \frac{1}{(1 + e^{0})} \Big(1 - \frac{1}{(1 + e^{0})}\Big)
+				\\
+				&= \frac{1}{2}(1 - \frac{1}{2})
+				\\
+				&= \boxed{-\frac{1}{4}}
+	\end{split}
+\]
+
+
+
+
 \item $\nabla^2 f(\x)$  when $\a = [1,1,1,1,1]^\top$ and $\x = [0,0,0,0,0]^\top$
+
+Evaluating $f(\x)$ at these values gives:
+\[
+	\begin{split}
+		f(\x) &= 1/(1+\exp(-z))
+			\\
+			&= 1/(1+\exp(0))
+			\\
+			&= \frac{1}{2}
+	\end{split}
+\]
+
+Plugging in this value to the $\nabla^2 f(\x)$ equation gives the following:
+
+	\[
+		\begin{split}
+			\nabla^2 f(\x) &= f(\x)(2f(\x)^2 - 3 f(\x) + 1)
+				\\
+				&= (\frac{1}{2})\times \Big(2\times(\frac{1}{2})^2 - 3 \times \frac{1}{2} + 1\Big)
+				\\
+				&= \boxed{0}
+		\end{split}
+	\]
+
+
 \end{enumerate}
 Note that $0 \le f(\x) \le 1$.
-
+\pagebreak
+\label{sec:q8}
 \item~[10 points] Show that $g(x) = -\log(f(\x))$ where $f(\x)$ is a logistic function defined as above, is convex. 
+
+\solution
+
+We can prove the convexity of $g(\x)$ by applying the second-order condition of convexity. This states that a twice-differentiable function is convex if and only if its hessian matrix is positive semi-definite. Given the definition of the logistic function and the equation of the hessian, we can conclude that the hessian is indeed positive semi-definite since the logistic function is always non-negative. Therefore, $g(\x)$ is indeed convex. 
 
 
 \end{enumerate}
