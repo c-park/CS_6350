@@ -27,6 +27,13 @@
 \author{Homework \assignmentId}
 \date{Handed out: \releaseDate\\
   Due date: \dueDate}
+  
+%
+% Various Helper Commands
+%
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
 
 \begin{document}
 \maketitle
@@ -70,6 +77,7 @@
 
 
 \section{Decision Tree [40 points + 10 bonus]}
+
 \begin{table}[h]
 	\centering
 	\begin{tabular}{cccc|c}
@@ -93,6 +101,30 @@
 \item~[5 points] Use the ID3 algorithm with information gain to learn a decision tree from the training dataset in Table 1. Please list every step in your tree construction, including the data subsets, the attributes, and how you calculate the information gain of each attribute and how you split the dataset according to the selected attribute. Please also give a full structure of the tree. You can manually  draw the tree structure,  convert the picture into a PDF/EPS/PNG/JPG format and include it in your homework submission; or instead, you can  represent the tree with a conjunction of prediction rules as we discussed in the lecture. 
 \item~[2 points] Write the boolean function which your decision tree represents. Please use a table to describe the function --- the columns are the input variables and label, \ie $x_1$, $x_2$, $x_3$, $x_4$ and $y$; the rows are different input and  function values. 
 \end{enumerate}
+
+\solution
+\label{sec:q1}
+\begin{enumerate}
+\item~
+
+\[
+        \begin{split}
+            p(A) &= p(\text{At least one head})
+            \\
+            &= 1 - p(\text{All tails})
+            \\
+            &= 1 - \frac{1}{2^{10}}
+            \\
+            &= \boxed{\frac{1023}{1024}}
+        \end{split}
+\]
+
+\item~
+
+\end{enumerate}
+
+
+
 \item~[17 points] Let us use a training dataset to learn a decision tree about whether to play tennis (\textbf{Page 39, Lecture: Decision Tree Learning}, accessible by clicking the link \href{http://www.cs.utah.edu/~zhe/teach/pdf/decision-trees-learning.pdf}{http://www.cs.utah.edu/\textasciitilde zhe/teach/pdf/decision-trees-learning.pdf}). In the class, we have shown how to use information gain to construct the tree in ID3 framework.  
 \begin{enumerate}
 	\item~[7 points] Now, please use majority error (ME) to calculate the gain, and select the best feature to split the data in ID3 framework. As in problem 1, please list every step in your tree construction,  the attributes,  how you calculate the gain of each attribute and how you split the dataset according to the selected attribute. Please also give a full structure of the tree.
@@ -100,18 +132,55 @@
 	\item~[3 points] Compare the two trees you just created with the one we built in the class (see Page 58 of the lecture slides). Are there any differences? Why? 
 \end{enumerate}
 
+\solution
+\label{sec:q2}
+\begin{enumerate}
+\item~
+\
+
+\item~
+
+\item~
+
+\end{enumerate}
+
+
 \item~[16 points] Continue with the same training data in Problem 2. Suppose before the tree construction, we receive one more training instance where Outlook's value is missing: \{Outlook: Missing, Temperature: Mild, Humidity: Normal, Wind: Weak, Play: Yes\}. 
 \begin{enumerate}
 \item~[3 points] Use the most common value in the training data as the missing  value, and calculate the information gains of the four features. Indicate the best feature.
 \item~[3 points] Use the most common value among the  training instances with the same label, namely, their attribute "Play" is "Yes", and calculate the information gains of the four features. Indicate the best feature
 \item~[3 points] Use the fractional counts to infer the feature values, and then calculate the information gains of the four features. Indicate the best feature.
 \item~[7 points] Continue with the fractional examples, and build the whole free with information gain. List every step and the final tree structure.  
+\end{enumerate}
+
+\solution
+\label{sec:q3}
+\begin{enumerate}
+\item~
+\
+
+\item~
+
+\item~
+
+\item~
 
 \end{enumerate}
+
 \item ~[\textbf{Bonus question 1}]~[5 points].  Prove that the information gain is always non-negative.  That means, as long as we split the data, the purity will never get worse! (Hint: use convexity)
+
+\solution
+\label{sec:q4}
+
+
 \item ~[\textbf{Bonus question 2}]~[5 points].  We have discussed how to use decision tree for regression (i.e., predict numerical values) --- on the leaf node, we simply use the average of the (numerical) labels as the prediction.  Now, to construct a regression tree, can you invent a gain to select the best attribute to split data in ID3 framework?
 
+\solution
+\label{sec:q5}
+
+
 \end{enumerate}
+
 
 \section{Decision Tree Practice [60 points]}
 \begin{enumerate}
