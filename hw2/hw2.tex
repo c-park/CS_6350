@@ -104,13 +104,139 @@ where $D_t(i)$ is the weight of $i$-th training example, and $h_t(x_i)$ is the p
 \epsilon_t = \sum_{y_i \neq h_t(x_i)} D_t(i).
 \]
 
-	\item~[8 points] Can you figure out an equivalent linear classifier and a decision tree for the following Boolean functions? For linear classifiers, please point out what the weight vector, the bias parameter and the hyperplane are. Note that the hyperplane is determined by an equality. If you cannot find out such a  linear classifier, please explain why. 
+	Starting with the following definition of $Z_t$, I then take the derivative w.r.t. $\alpha_t$ and set equal to zero:
+	
+	\[
+		\begin{split}
+			Z_t = \sum_{i:h_t(x_i)=y_i} D_t(i)e^{-\alpha_t} + 	\sum_{i:h_t(x_i)\neq y_i} D_t(i)e^{\alpha_t}		
+		\end{split}	
+	\]
+	
+	\[
+		\begin{split}
+			\frac{dZ_t}{d\alpha_t} &= \sum_{i:h_t(x_i)=y_i} - D_t(i)e^{-\alpha_t} + 	\sum_{i:h_t(x_i)\neq y_i} D_t(i)e^{\alpha_t} = 0		
+		\end{split}	
+	\]
+	
+	\[
+		\begin{split}
+			 \sum_{i:h_t(x_i)=y_i} D_t(i) = 	\sum_{i:h_t(x_i)\neq y_i} D_t(i)e^{2\alpha_t} 
+		\end{split}	
+	\]
+	
+	Then, by definition and the proof proof presented in class, the error can be written as:
+	
+	\[
+		\epsilon_t = \sum_{y_i \neq h_t(x_i)} D_t(i).
+	\]
+	
+
+
+	\item~[8 points] 
 	\begin{enumerate}
 		\item~[1 point] $f(x_1, x_2, x_3) = x_1 \lor x_2 \lor x_3$
+		
+			Starting with the generic hyperplane formula for three dimensions, we can solve for the bias and weights to fit the above boolean disjunction.
+			
+			\[
+				\begin{split}
+					b + w_1 x_1 + w_2 x_2 + w_3 x_3 = 0
+				\end{split}
+			\]
+			
+			where $\w = [1, 1, 1]$ and $b=-1$. Putting this together gives the following linear classifier:
+			
+			\[
+				\begin{split}
+					x_1 + x_2 + x_3 \geq 1
+				\end{split}
+			\]
+			
+			This means that $f(x_1, x_2, x_3) = 1$ iff the above inequality is true. The separating hyperplane is therefore:
+			
+			\[
+				\begin{split}
+					x_1 + x_2 + x_3 - 1  = 0
+				\end{split}
+			\]
+			
+			
+			
+
+		
 		\item~[1 point] $f(x_1, x_2, x_3) = x_1 \land \neg x_2 \land \neg x_3$
+		
+		Just as the problem above:
+		
+			\[
+				\begin{split}
+					b + w_1 x_1 + w_2 x_2 + w_3 x_3 = 0
+				\end{split}
+			\]
+			
+			where $\w = [1, -1, -1]$ and $b=-1$. Putting this together gives the following linear classifier:
+			
+			\[
+				\begin{split}
+					x_1 - x_2 - x_3 \geq 1
+				\end{split}
+			\]
+			
+			The separating hyperplane is therefore:
+			
+			\[
+				\begin{split}
+					 x_1 - x_2 - x_3 - 1  = 0
+				\end{split}
+			\]
+		
+		
 		\item~[1 point] $f(x_1, x_2, x_3) = \neg x_1 \lor \neg x_2 \lor \neg x_3$ 
+		
+		Using De Morgan's law, the negation of a conjuntion is the disjuntion of the negations. We can therefore rewrite the above equation as:
+		
+			\[
+				\begin{split}
+					f(x_1, x_2, x_3) &= \neg x_1 \lor \neg x_2 \lor \neg x_3
+					\\
+					&= \neg ( x_1 \land  x_2 \land  x_3 )
+				\end{split}
+			\]
+			
+			Solving for the weights and bias gives the following:
+			
+			\[
+				\begin{split}
+					b + w_1 x_1 + w_2 x_2 + w_3 x_3 = 0
+				\end{split}
+			\]
+			
+			where $\w = [1, 1, 1]$ and $b=-3$. Putting this together gives the following linear classifier:
+			
+			\[
+				\begin{split}
+					x_1 + x_2 + x_3 < 3
+				\end{split}
+			\]
+			
+			This means that $f(x_1, x_2, x_3) = 1$ iff the above inequality is true. The separating hyperplane is therefore:
+			
+			\[
+				\begin{split}
+					 x_1 + x_2 + x_3 - 3  = 0
+				\end{split}
+			\]
+			
+			Comparing $f(x_1, x_2, x_3) = \neg ( x_1 \land  x_2 \land  x_3 )$ and $f(x_1, x_2, x_3) =  ( x_1 \land  x_2 \land  x_3 )$, the only difference is in this case we use a $<$ instead of $\geq$.
+		
+		
+		
 		\item~[2 points] $f(x_1, x_2, x_3, x_4) = (x_1 \lor x_2) \land (x_3 \lor x_4)$
+		
+		
 		\item~[2 points] $f(x_1, x_2, x_3, x_4) = (x_1 \land x_2) \lor (x_3 \land x_4)$
+		
+		
 		\item~[1 point] What do you conclude about the expressiveness of decision trees and linear classifiers? Why?
 	\end{enumerate}
 		

@@ -11,9 +11,22 @@ import pandas as pd
 import matplotlib as mpl
 
 
-def entropy(labels):
+# def entropy(labels, weights):
+#     vals, freqs = np.unique(labels, return_counts=True)
+#     probs = freqs / len(labels)
+#     entropy = - probs.dot(np.log2(probs))
+
+#     return entropy
+
+def entropy(labels, weights):
     vals, freqs = np.unique(labels, return_counts=True)
-    probs = freqs / len(labels)
+    probs = np.zeros(len(vals))
+    weight_sum = np.sum(weights)
+
+    for i in range(len(vals)):
+        indexes = np.where(labels == vals[i])
+        probs[i] = np.sum(weights[indexes]) / weight_sum
+
     entropy = - probs.dot(np.log2(probs))
 
     return entropy
@@ -35,7 +48,7 @@ def gini(labels):
     return gi
 
 
-def info_gain(data, split_attr, target_attr, gain_method):
+def info_gain(data, split_attr, target_attr, gain_method, weights):
 
     #print('method: {}'.format(gain_method))
     #print('type: {}'.format(type(gain_method)))
@@ -56,7 +69,7 @@ def info_gain(data, split_attr, target_attr, gain_method):
     return info_gain
 
 
-def id3(data, original_data, attrs, target_attr, gain_method, parent_label, current_depth=0, max_depth=6):
+def id3(data, original_data, attrs, target_attr, gain_method, parent_label, weights, current_depth=0, max_depth=6):
     """ ID3 Algorithm
 
     Args:
@@ -99,7 +112,7 @@ def id3(data, original_data, attrs, target_attr, gain_method, parent_label, curr
             return parent_label
 
         # Find best attribute to split data on
-        info_gains = [info_gain(data, attr, target_attr, gain_method)
+        info_gains = [info_gain(data, attr, target_attr, gain_method, weights)
                       for attr in attrs]
         best_attr = attrs[info_gains.index(max(info_gains))]
 
@@ -120,7 +133,7 @@ def id3(data, original_data, attrs, target_attr, gain_method, parent_label, curr
 
             # Recursion
             new_tree = id3(new_data, original_data, attrs, target_attr,
-                           gain_method, parent_label, current_depth, max_depth)
+                           gain_method, parent_label, current_depth, max_depth, weights)
 
             # Add subtree to parents tree
             tree[best_attr][val] = new_tree
@@ -159,7 +172,7 @@ def evaluate(data, tree, label):
 
 
 def num_2_binary(data):
-    for attr in attrs:
+    for attr in data.columns.values:
         vals = data[attr]
         if np.unique(vals).dtype == 'int64':
             data[attr] = data[attr] >= data[attr].median()
