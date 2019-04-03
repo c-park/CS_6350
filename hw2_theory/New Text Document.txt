@@ -1,0 +1,5 @@
+Using the given confidence and accuracy values, we have $\delta=0.05$ and $\epsilon=0.1$. Plugging in these as well as $|H_1|=3^10$, we can plug them into the original inequality to solve for $m_1$.
+	
+	\[
+		m_1 > \frac{1}{10}\big(\log(3^10) + \log\frac{1}{\delta}\big)
+	\]

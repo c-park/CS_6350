@@ -34,33 +34,30 @@
 
 \input{emacscomm}
 {\footnotesize
+	Author: Cade Parkison
 	
+	Note: Due to time constraints, I was unable to finish getting results for all of the programming parts of this assignment. My implementations made the testing very time consuming. For bagging and random forests, it took more than 3 hours each to train the classifiers according to the specifications. Because of this, I did not get the plots that were required. I do believe my implementations are mostly correct, and I hope that by looking at my code this will be noticable. I will work much harder on future assignments to improve the quality of my results. 
 }
 
 
 \section{Paper Problems [40 points + 6 bonus]}
 \begin{enumerate}
-\item~[5 points] We have derived the PAC guarantee for consistent learners (namely, the learners can produce a hypothesis that can 100\% accurately classify the training data). The PAC guarantee is described as follows. Let $H$ be the hypothesis space used by our algorithm. Let $C$ be the concept class we want to apply our learning algorithm to search for a target function in $C$. We have shown that,  with probability at least $1-\delta$, a hypothesis $h\in H$ that is consistent with a training set of $m$ examples will have the generalization error $\mathrm{err}_D(h) < \epsilon$ if 
+\item~[5 points] 
 \[
 m > \frac{1}{\epsilon}\big(\log(|H|) + \log\frac{1}{\delta}\big)
 \]
 
 \begin{enumerate}
-	\item~[2 points] Suppose we have two learning algorithms $L_1$ and $L_2$, which use hypothesis spaces $H_1$ and $H_2$ respectively. We know that $H_1$ is larger than $H_2$, \ie $|H_1| > |H_2|$.
-	For each target function in $C$, we assume both algorithms can find a hypothesis consistent with the training data. 
+	\item~[2 points]
 	\begin{enumerate}
-		\item~[1 point] According to Occam's Razor principle, which learning algorithm's  result hypothesis do you prefer? Why?
+		\item~[1 point]
 		
-		\solution
 		
 		An interpretation Occam's Razor principle states that given two explanations of the data, the simpler explanation is preferable. According to this, I would prefer hypothesis with the smaller hypothesis space size, $H_2$. This is in line with the goal of Machine learning, to find the simplest hypothesis that is consistent with the sampled data. 
 		
 		
-		\item~[1 point]  How is this principle reflected in our PAC guarantee? Please use the above inequality to explain why we will prefer the corresponding result hypothesis. 
-	\end{enumerate}
-	
-	\solution
-
+		\item~[1 point] 
+		
 	If we assume fixed error and confidence parameters ($\delta$ and $\epsilon$) for both learning algorithms, algorithm $L_1$ will require more samples ($m_1$) in order to produce the same error and confidence levels. This can be seen in the following inequalities: 	
 	
 	\[
@@ -83,16 +80,49 @@ m > \frac{1}{\epsilon}\big(\log(|H|) + \log\frac{1}{\delta}\big)
 	
 	This means that if both algorithms use the same number of training samples during the learning phase, algorithm $L_2$ will have higher accuracy ($1-\epsilon$) and confidence ($1-\delta$). I therefore prefer the hypothesis with the smaller hypothesis space, $H_2$.
 	
-	\item~[3 points] Let us investigate algorithm $L_1$. Suppose we have $n$ input features, and the size of the hypothesis space used by $L_1$ is $3^n$. Given $n=10$ features, if we want to guarantee a 95\% chance of learning a hypothesis of at least 90\% generalization accuracy, how many training examples at least do we need for $L_1$?
+	\end{enumerate}
+	
+	
+	
+	\item~[3 points] 
+	
+	Using the given confidence and accuracy values, we have $\delta=0.05$ and $\epsilon=0.1$. Plugging in these as well as $|H_1|=3^{10}$, we can plug them into the original inequality to solve for $m_1$.
+	
+	\[
+		\begin{split}
+			m_1 &> 10\big(\log(3^{10}) + \log20\big)
+			\\
+			&> 60.72
+		\end{split}	
+	\]
+	
+	Therefore, we need at least 61 training examples to get the hypothesis with desired performance in $L_1$.
 \end{enumerate}
 
-\item~[7 points] Let us check the PAC learnability for several concept classes. We assume that our learning algorithm can always result in a hypothesis consistent with the training data. We assume the hypothesis space $H$ is the same as the concept class $C$. Please determine whether the following concept classes are PAC learnable or not and prove your conclusions [Hint: please carefully check the definition of PAC learnability]. 
+\item~[7 points] 
 \begin{enumerate}
 	\item~[1 points] Simple disjunctions out of $n$ binary variables
+	
+		The size of the hypothesis space of boolean disjuntions is $3^n$. This is definitely PAC learnable, as seen in the previous problem with n=10.
+	
 	\item~[1 points] $m$-of-$n$ rules (Note that $m$ is a fixed constant).  
+	
+	
 	\item~[1 points] General conjunctions out of $n$ binary variables (``General'' means that negations are allowed to operator on each variable before the conjunction).
+	
+	For purely conjunctive concepts, the hypotheses space is $3^n$, since each attribute can be required to be true, false, or just ignored. 
+	
+	
 	\item~[2 points] General Boolean functions of $n$ binary variables. 
+	
+	For general boolean functions, the size of the hypothesis space is $2^{2^n}$. As n increases, this would get exponentially harder to be PAC learnable, but still possible with enough training examples. 
+	
+	
 	\item~[2 points] Can ID3 algorithm \textit{efficiently} PAC learn the above concept classes? 
+	
+	ID3 would not be able to efficiently learn all these classes, due to the exponential nature of the their PAC functions. The most simple of the classes would be efficiently learnable, but not the more general cases. 
+	
+	
 \end{enumerate}
 
 \item~[5 points] In our lecture about AdaBoost algorithm, we introduced the definition of weighted error in each round $t$, 
@@ -103,6 +133,8 @@ where $D_t(i)$ is the weight of $i$-th training example, and $h_t(x_i)$ is the p
 \[
 \epsilon_t = \sum_{y_i \neq h_t(x_i)} D_t(i).
 \]
+
+\solution
 
 	Starting with the following definition of $Z_t$, I then take the derivative w.r.t. $\alpha_t$ and set equal to zero:
 	
@@ -238,6 +270,9 @@ where $D_t(i)$ is the weight of $i$-th training example, and $h_t(x_i)$ is the p
 		
 		
 		\item~[1 point] What do you conclude about the expressiveness of decision trees and linear classifiers? Why?
+		
+		Decision trees are able to represent any boolean functions, while linear classifiers can only represent certain subsets of boolean functions that are linearly separable. 
+		
 	\end{enumerate}
 		
 	
@@ -287,13 +322,110 @@ where $D_t(i)$ is the weight of $i$-th training example, and $h_t(x_i)$ is the p
 
 \begin{enumerate}
 	\item~[1 point] Write down the LMS (least mean square) cost function $J(\w, b)$. 
+	
+	Starting with basic cost function and expanding we get:
+	
+	\[
+		\begin{split}
+			J(\w) = \frac{1}{2} \sum_{i=1}^m (y_i - \w^T\x_i)^2
+		\end{split}
+	\] 
+	
+	\[
+		\begin{split}
+			J(\w, b) &= \frac{1}{2} \big(  (y_1 - (w_1x_{11} + w_2x_{12} + w_3x_{13} + b))^2 + (y_2 - (w_1x_{21} + w_2x_{22} + w_3x_{23} + b))^2 + ... \big)\\
+			&= \frac{1}{2} \big((1-(w_1-w_2+2w_3+b))^2+(4-(w_1+w_2+3w_3+b))^2+(-1-(-w_1+w_2+b))^2+(-2-(w_1+2w_2-4w_4+b))^2+(3w_1-w_2-w_3+b)^2   \big)
+		\end{split}
+	\]
+	
+	
 	\item~[3 points] Calculate the gradient $\frac{\nabla J}{\nabla \w}$ and $\frac{\nabla J}{\nabla b}$ 
 	\begin{enumerate}
 		\item when $\w = [0,0,0]^\top$ and $b = 0$;
+		
+		\[
+			\begin{split}
+				\frac{\delta J}{\delta b} &= (1-0) + (4-0) + (-1-0) + (-2-0)+ (0-0)\\
+					&= 1 + 4 - 1 - 2\\
+					&= 2
+			\end{split}
+		\]
+		
+		\[
+			\begin{split}
+				\frac{\delta J}{\delta w_1} &= (1-0)(1) + (4-0)(1) + (-1-0)(-1) + (-2-0)(1)+ (0-0)(3)\\
+					&= 1 + 4 + 1 - 2\\
+					&= 4
+			\end{split}
+		\]
+		
+		\[
+			\begin{split}
+				\frac{\delta J}{\delta w_2} &= (1-0)(-1) + (4-0)(1) + (-1-0)(1) + (-2-0)(2)+ (0-0)(-1)\\
+					&= -1 + 4 -1 - 4\\
+					&= -2
+			\end{split}
+		\]
+		
+		\[
+			\begin{split}
+				\frac{\delta J}{\delta w_3} &= (1-0)(2) + (4-0)(3) + (-1-0)(0) + (-2-0)(-4)+ (0-0)(-1)\\
+					&= 2 + 12 + 0 - 8\\
+					&= 6
+			\end{split}
+		\]
+		
 		\item when $\w = [-1,1,-1]^\top$ and $b = -1$;
-		\item when $\w = [1/2,-1/2,1/2]^\top$ and $b = 1$.
+		
+		Using the same formulas as above, I got the following results:
+		
+		\[
+				\frac{\delta J}{\delta b} = 10
+		\]
+		
+		\[
+				\frac{\delta J}{\delta w_1} = 22
+		\]
+		
+		\[
+				\frac{\delta J}{\delta w_2} = -16
+		\]
+		
+		\[
+				\frac{\delta J}{\delta w_3} = 56
+		\]
+		
+		\item when $\w = [1/2,-1/2,1/2]^\top$ and $b = 1$..
+		
+		\[
+				\frac{\delta J}{\delta b} = -4.5
+		\]
+		
+		\[
+				\frac{\delta J}{\delta w_1} = -7.5
+		\]
+		
+		\[
+				\frac{\delta J}{\delta w_2} = 4.0
+		\]
+		
+		\[
+				\frac{\delta J}{\delta w_3} = 5.0
+		\]
+		
 	\end{enumerate}
 	\item~[2 points] What are the optimal $\w$ and $\b$ that minimize the cost function? 
+	
+	Using $A^tA x = A^tb$ where A is the features and b is the outcomes, solving for x (weights), I got the following:
+	
+	\[
+		b = -1
+	\]
+
+	\[
+		\w = [1, 1, 1]
+	\]	
+	
 	\item~[3 points] Now, we want to use stochastic gradient descent to minimize $J(\w, b)$. We initialize $\w = \0$ and $b = 0$. We set the learning rate $r = 0.1$ and sequentially go through the $5$ training examples. Please list the stochastic gradient in each step and the updated $\w$ and $b$.  
 \end{enumerate}
 \end{enumerate}
@@ -305,20 +437,20 @@ where $D_t(i)$ is the weight of $i$-th training example, and $h_t(x_i)$ is the p
 
 \item~[36 points] We will implement the boosting and bagging algorithms based on decision trees.  Let us test them on the bank marketing dataset in HW1 (bank.zip in Canvas). We use the same approach to convert the numerical features into binary ones. That is, we choose the media (NOT the average) of the attribute values (in the training set) as the threshold, and examine if the feature is bigger (or less) than the threshold.  For simplicity, we treat ``unknown'' as a particular attribute value, and hence we do not have any missing attributes for both training and test.
 \begin{enumerate}
-	\item~[8 points] Modify your decision tree learning algorithm to learn decision stumps ---  trees with only two levels. Specifically, compute the information gain to select the best feature to split the data. Then for each subset, create a leaf node. Note that your decision stumps must support weighted training examples. Based on your decision stump learning algorithm, implement AdaBoost algorithm. Vary the number of iterations T from $1$ to $1000$, and examine the training and test errors. You should report the results in two figures. The first figure shows how the training and test errors vary along with T. The second figure shows  the training and test errors of all the decision stumps learned in each iteration. What can you observe and conclude? You have had the results for a fully expanded decision tree in HW1. Comparing them with Adaboost, what can you observe and conclude?
+	\item~[8 points] 
+	
+	
+	Adaboost greatly improves on the results of a single fully expanded decision tree by averaging the results of many decision stump models. In my implementation, I ran into the problem where after 2 iterations, all of the errors were stuck at a constant value of around 0.002. I believe this had to do with the way I implemented the alpha and epsilon calculations. The epsilon values started over 0.5 and converged to 0.5, which caused my alphas to go to zero. When all the alphas were zero, the weights never changed and the errors remained constant. If I had more time on the assignment, I believe this issue could be fixed.
 	
 	\item~[8 points] Based on your code of the decision tree learning algorithm (with information gain), implement a Bagged trees learning algorithm. Note that each tree should be fully expanded --- no early stopping or post pruning. Vary the number of trees from $1$ to $1000$, report how the training and test errors vary along with the tree number in a figure. Overall, are bagged trees better than a single tree? Are bagged trees better than Adaboost? 
+	
+	
+	For the bagged trees implementation, my algorithm took multiple hours to run to the desired 1000 trees. Because of this, I was unable to get a good plot of errors vs trees. But, when testing on a small number of trees, the result was a decrease in error over time. This appeared to be better than a single tree. As expected, this method decreases the variance of the predictions. Compared to Adaboost, this algorithm performed worse, but both algorithms were better than a single decision tree. Overall, I think boosting would preform better in most cases. 
 
-	\item~[6 points] Through the bias and variance decomposition, we have justified why the bagging approach is more effective than a single classifier/predictor. Let us verify it in real data. Experiment with the following procedure.
-	\begin{itemize}
-		\item REPEAT for 100 times
-		\item ~[STEP 1] Sample $1,000$ examples \textit{uniformly without replacement} from the training datset
-		\item ~[STEP 2] Run your bagged trees learning algorithm based on the $1,000$ training examples and learn $1000$ trees.
-		\item END REPEAT 
-		\item Now you have $100$ bagged predictors in hand. For comparison, pick the first tree in each run to get $100$ fully expanded trees (i.e. single trees). 
-		\item 	For each of the test example, compute the predictions of the $100$ single trees. Take the average, subtract the ground-truth label, and take square to compute the bias term (see the lecture slides). Use all the predictions to compute the sample variance  as the approximation to the variance term (if you forget what the sample variance is, check it out 
-		\href{http://www.randomservices.org/random/sample/Variance.html}{here}). You now obtain the bias and variance terms of a single tree learner for one test example. You will need to compute them for all the test examples and then take average as your final estimation of the bias and variance terms for the single decision tree learner. You can add the two terms to obtain the estimation of the general squared error (that is, expected error w.r.t test examples). Now use your $100$ bagged predictors to do the same thing and estimate the general bias and variance terms, as well as the general squared error.  Comparing the results of the single tree learner and the bagged trees, what can you conclude?  What causes the difference?  
-	\end{itemize}
+	\item~[6 points] 
+		
+		Unfortunately, due to time constraints I was unable to complete this part of the assignment. 
+
 	 
 	\item~[8 points] Implement the random forest algorithm as we discussed in our lecture. Vary the number of random trees from $1$ to $1000$. Note that you need to modify your tree learning algorithm to randomly select a subset of features before each split. Then use the information gain to select the best feature to split.  Vary the size of the feature subset from $\{2, 4, 6\}$. Note that if your feature subset happen to be all the features used before, simply resample the subset.  Report in a figure how the training and test errors vary along with the number of random trees for each feature subset size setting. How does the performance compare with bagged trees? 
 	
@@ -330,11 +462,74 @@ where $D_t(i)$ is the weight of $i$-th training example, and $h_t(x_i)$ is the p
 	\item~[22 points] We will implement the LMS method for a linear regression task. The dataset is from UCI repository (\url{https://archive.ics.uci.edu/ml/datasets/Concrete+Slump+Test}). The task is to predict the real-valued SLUMP of the concrete, with $7$ features. The features and output are listed in the file ``concrete/data-desc.txt''. The training data are stored in the file ``concrete/train.csv'', consisting of $53$ examples. The test data are stored in ``concrete/test.csv'', and comprise of $50$ examples. In both the training and testing datasets, feature values and outputs are separated by commas. 
 	
 	\begin{enumerate}
-		\item~[8 points] Implement the batch gradient descent algorithm, and tune the learning rate $r$ to ensure the algorithm converges.  To examine convergence, you can watch the norm of the weight vector difference,  $\|w_{t} - w_{t-1}\|$,  at each step $t$.  if $\|w_{t} - w_{t-1}\|$ is  less than a tolerance level, say, $1e-6$, you can conclude that it converges. You can initialize your weight vector to be $\0$.  Please find an appropriate $r$ such that the algorithm converges. To tune $r$, you can start with a relatively big value, say, $r=1$, and then gradually decrease $r$, say $r=0.5, 0.25, 0.125, \ldots$, until you see the convergence. 
-		Report the learned weight vector, and the learning rate $r$. Meanwhile, please record the cost function  value of the training data at each step, and then draw a figure shows how the cost function changes along with steps. Use your final weight vector to calculate  the cost function value of the test data. 
-		%To do so, you can start $r$ to be relatively big, say, $r=1$, and then gradually decrease $r$. For a specific setting of $r$, you can calculate the cost function after each update and draw a curve showing how the cost function changes along with the number of updates. If you find the cost function on your curve tends to converge, you can conclude your algorithm convergences. 
+		\item~[8 points] 
+		
+		
+		When implementing Batch Gradient Descent, I started with learning rate of 1 and slowly decreased it until the algorithm converged. I found this convergence happened around a learning rate of $r=0.01$. At this rate, my algorithm starts to converge very quickly, at about 1000 iterations. I also found that by initializing the weight vector to 1 instead of 0, the algorithm converged much faster.
+		
+		The learned weight vector is the following:
+		
+		\[
+			\w =  [-0.01520,0.90022,0.78594,0.8506, 1.29862,0.12983,  1.5717 ,  0.99834] 
+		\]
+		
+		Using this weight vector to calculate the cost function value of the test data, I get a function value of $23.361$.
+		
+		The figure below shows the convergence of the cost function vs time.
+		
+		
+		
+		
+		\includegraphics{BGD_cost_vs_time.pdf}
+		
+ 
 		\item~[8 points] Implement the stochastic gradient descent (SGD) algorithm. You can initialize your weight vector to be $\0$. Each step, you randomly sample a training example, and then calculate the stochastic gradient to update the weight vector.  Tune the learning rate $r$ to ensure your SGD converges. To check convergence, you can calculate the cost function of the training data after each stochastic gradient update, and draw a figure showing how the cost function values vary along with the number of updates. At the beginning, your curve will oscillate a lot. However, with an appropriate $r$, as more and more updates are finished, you will see the cost function tends to converge. Please report the learned weight vector, and the learning rate you chose, and the cost function value of the test data with your learned weight vector.   
+		
+		For stochastic gradient descent, I started with the learning rate used in batch gradient descent, $r=0.01$, and calculated the cost function vs the number of updates. With this learning rate, the cost fluctuated a lot. This can be seen in the figure below.
+		
+		\includegraphics{r01.pdf}
+		
+		Next, I started to lower the learning rate and compare the plots. Below are the plots for learning rates of 0.005, 0.001, 0.0005, and 0.0001. As the learning rates decrease, the number of updates required for convergence increases. Also, the plots get much smoother, as can be seen below. 
+		
+		\includegraphics{r005.pdf}
+		
+		\includegraphics{r001.pdf}
+		
+		\includegraphics{r0005.pdf}
+		
+		\includegraphics{r0001.pdf}
+		
+		From the plots above, it appears a learning rate between 0.0005 and 0.0001 will provide a constant steady state value while also converging quickly. 
+		
+		For the learning rate of 0.0001, the weight vector calculated is the following:
+		
+		\[
+			\w =  [-0.03712, -0.05441, -0.22296, -0.2290 ,  0.45588, -0.03449,  0.20263, -0.01664]
+		\]
+		
+		Using this weight vector, I calculated the cost function of the test data to be $f=22.415$, which is fairly close to the cost value using batch gradient descent.
+		
 		\item~[6 points] We have discussed how to  calculate the optimal weight vector with an analytical form. Please calculate the optimal weight vector in this way. Comparing with the  weight vectors learned by batch gradient descent and stochastic gradient descent, what can you conclude? Why?
+		
+		I calculated the analytical form of the weight vector with the following equation:
+		
+		\[
+			A^tA x = A^tb
+		\]
+		
+		where x is the weight vector, A is the feature matrix, and b is the output vector. Solving for x (w), the resulting weights are:
+		
+		\[
+			\w =  [ 0.03833, -1.05154, -1.38454, -1.0843, -0.34476, -0.24711, -1.36924, -0.65715]
+		\]
+		
+		
+		Calculating the cost of the training data gives $f=25.75$. Using this weight vector to calculate cost of the test data, I get $f=15.4873$. This value is very close to the converging cost in both BGD and SGD algorithms. Comparing the three weight vectors, all weights are very different. Even though the various weights are different, the calculated costs seem to be similar. In conclusion, I can say that both batch gradient descent and stochastic gradient descent are good at fitting to the training data, but not great at generalizing. 
+		
+		
+		
+			
+		
 	\end{enumerate}
 
 \end{enumerate}
